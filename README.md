@@ -9,3 +9,14 @@ Origin of the term:
 Taino is a term referring to the indigenous peoples of the carribean. It's original meaning is "relatives" and "good people" and these are considered to be part of the Arawak natives of south america and the carribean. 
 https://en.wikipedia.org/wiki/Arawak
 https://www.researchgate.net/publication/296694496_Origins_of_the_word_Taino
+
+
+#TO-DO:
+- Routing
+- XHR
+- Component addition
+- State handling
+- Caching via zombie.js
+
+#Structure:
+- taino.js [loads core functionality]
