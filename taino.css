@@ -1,0 +1,12 @@
+*{box-sizing:border-box;}
+html,body{width:100%;min-height:100%;font-size:12px;margin:0;padding:0;}
+html{font-size:100%;text-rendering:optimizeLegibility !important;}
+
+/*general rules*/
+h1{}
+h2{}
+h3{}
+a{}
+a:hover{}
+ul{list-style-type:none; margin:0; padding:0;}
+.hidden{display:none;}
