@@ -4,7 +4,7 @@
 class siteobj{
     constructor() {
         /*define taino global vars, mostly endpoints and public creds*/
-        this.serverurl = 'https://somedomain.com/someendpoint';
+        this.serverurl = 'https://jsonplaceholder.typicode.com/posts';
         this.jspath = '/js';
         this.csspath = '/css';
         this.header = ''; /*sitewide header defined in template.js or wherever*/
@@ -80,16 +80,22 @@ class siteobj{
 
     loadcontent(){        
         site.main.setAttribute("class",site.currentpage.replace("/",""));        
-        if(site.currentpage=='/home') {
-            site.loadScript(site.jspath+site.currentpage+'.js',function(){
-                var loader = site.currentpage.replace("/","") + 'Loader';
+        var loader = site.currentpage.replace("/","") + 'Loader';
+        if(site.cur.constructor.name && site.cur.constructor.name==loader){
+            site.cur = Function(`return new ${loader}()`)(); /*filename+'Loader' has to be the main class.*/
+            site.main.content.innerHTML = site.cur.starthtml;
+            document.title = site.cur.title;
+            site.defaultlisteners();
+        }else{
+            site.loadScript(site.jspath+site.currentpage+'.js',function(){                
                 site.cur = Function(`return new ${loader}()`)(); /*filename+'Loader' has to be the main class.*/
                 site.main.content.innerHTML = site.cur.starthtml;
                 document.title = site.cur.title;
+                site.defaultlisteners();
             });
-            
+        }
+            /*   
         }else if(site.currentpage=='/game'){
-            /*console.log(site.state);*/
             site.loadScript('/js/socket.js',function(){
                 site.sock = io(site.socketurl,{'reconnectionAttempts' : '4','query':'verify='+site.state.sessk});
                 site.sock.on('connect_error', function(err) {
@@ -105,7 +111,7 @@ class siteobj{
         }else{
             //site.cur = new fourohfourpage(this);
             site.main.innerHTML = 'no page here'; //site.cur.starthtml;
-        }
+        }*/
     }
 
     update(){
@@ -117,7 +123,8 @@ class siteobj{
 
     route(path){
         if(Object.keys(site.routes).some(function(k){ return ~k.indexOf(path) })) {
-            window.history.pushState({"html": site.elid("pagecontent").innerHTML, "pageTitle": site.cur.title}, "", path);
+            console.log(path);
+            window.history.pushState({"html": site.main.innerHTML, "pageTitle": site.cur.title}, "", path);
             site.update();
         }else{
 
@@ -146,6 +153,24 @@ class siteobj{
     }
     elid(x){
         return document.getElementById(x);
+    }
+    defaultlisteners(){
+        let as = site.el("a:not(.cap)",true); /*recapture A tags when content reloads*/
+        for(let i=0; i<as.length; i++){
+            as[i].classList.add("cap");
+            let linkhost = as[i].hostname;
+            as[i].addEventListener('click', function(e){
+                e.preventDefault();
+                let pathName = new URL(this.href);
+                if(pathName.hostname === linkhost){                    
+                    window.history.pushState({}, pathName, this.href);  
+                    site.update();
+                }else{
+                    window.location.href = pathName;
+                }
+                return false;
+            });
+        }
     }
 };
 let site = new siteobj();

@@ -1,0 +1,30 @@
+*{box-sizing:border-box;}
+html,body{width:100vw;min-height:100vh;font-size:12px;margin:0;padding:0;color:#000;background:#ccc;}
+html{text-rendering:optimizeLegibility !important;}
+ 
+
+/*FONTS*/
+body{font-family:"Palatino Linotype";}
+
+/*GENERAL RULES*/
+h1{margin:0;}
+h2{}
+h3{}
+ul{list-style-type:none;margin:0;padding:0}
+a{color:#00f; text-decoration:none; }
+a:hover{ color:#33f;}
+.hidden{display:none;opacity:0}
+#tainomain{min-height:500px;}
+
+/*TEMPLATE*/
+header{width:100%; background:#ccc; text-align:center; height:80px; padding-top:30px;}
+header nav{width:100%; max-width:1200px; height:50px; text-align:right; }
+header nav a{height:50px; line-height:50px;display:inline-block; vertical-align:top; padding:0 15px; font-size:16px; color:#123; background:#ddd; text-align:center; text-transform:uppercase; font-weight:bold;}
+header nav a:hover{background:#666; color:#fff;}
+footer{width:100%; background:#333; text-align:center; height:100px; line-height:100px;}
+
+/*PAGES*/
+.pagewrap{margin:0 auto; min-height:80vh; width:100%; font-size:40px; text-align:center; color:#fff;}
+.home .pagewrap{border:10px solid #f00; }
+.about .pagewrap{border:10px solid #0f0; }
+.contact .pagewrap{border:10px solid #00f;}
