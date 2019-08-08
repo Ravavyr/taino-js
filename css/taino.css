@@ -1,5 +1,5 @@
 *{box-sizing:border-box;}
-html,body{width:100vw;min-height:100vh;font-size:12px;margin:0;padding:0;color:#000;background:#ccc;}
+html,body{width:100%;min-height:100vh;font-size:12px;margin:0;padding:0;color:#000;background:#ccc;}
 html{text-rendering:optimizeLegibility !important;}
  
 
@@ -25,6 +25,6 @@ footer{width:100%; background:#333; text-align:center; height:100px; line-height
 
 /*PAGES*/
 .pagewrap{margin:0 auto; min-height:80vh; width:100%; font-size:40px; text-align:center; color:#fff;}
-.home .pagewrap{border:10px solid #f00; }
-.about .pagewrap{border:10px solid #0f0; }
-.contact .pagewrap{border:10px solid #00f;}
+.home .pagewrap{ }
+.about .pagewrap{ }
+.contact .pagewrap{ }

@@ -4,7 +4,7 @@
 class siteobj{
     constructor() {
         /*define taino global vars, mostly endpoints and public creds*/
-        this.serverurl = 'https://jsonplaceholder.typicode.com/posts';
+        this.serverurl = 'https://dog.ceo/api/';
         this.jspath = '/js';
         this.csspath = '/css';
         this.header = ''; /*sitewide header defined in template.js or wherever*/
@@ -22,7 +22,9 @@ class siteobj{
             '/':'home',
             '/home':'home',
             '/about':'about',
-            '/contact':'contact'
+            '/contact':'contact',
+            '/examples':'examples',
+            '/dogs':'dogs'
         }
 
         this.components = new Map();
@@ -57,7 +59,6 @@ class siteobj{
     }
 
     getcurrent(path){
-        console.log(path);
         let curr = '';
         if(Object.keys(this.routes).some(function(k){ return ~k.indexOf(path) })) {
             curr = (path == '/' ? "/home" : path);
@@ -86,12 +87,14 @@ class siteobj{
             site.main.content.innerHTML = site.cur.starthtml;
             document.title = site.cur.title;
             site.defaultlisteners();
+            site.loadstyling(loader);
         }else{
             site.loadScript(site.jspath+site.currentpage+'.js',function(){                
                 site.cur = Function(`return new ${loader}()`)(); /*filename+'Loader' has to be the main class.*/
                 site.main.content.innerHTML = site.cur.starthtml;
                 document.title = site.cur.title;
                 site.defaultlisteners();
+                site.loadstyling(loader);
             });
         }
             /*   
@@ -170,6 +173,18 @@ class siteobj{
                 }
                 return false;
             });
+        }
+    }
+    loadstyling(loader){ /*loads in styling from a component*/
+        if(!site.cur.styling){return ;}
+        else{
+            if(!site.el('style.'+loader)){
+                let body = document.body;
+                let style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML=site.cur.styling;
+                body.appendChild(style);
+            }
         }
     }
 };
