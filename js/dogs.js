@@ -1,6 +1,7 @@
 class dogsLoader {
     constructor(site) {
         this.title = "Pick a Breed, any Breed";
+        this.meta_desc = "A Taino dynamic routing example";
         this.starthtml = `
             <div class="pagewrap about"><h1>Dog Breeds</h1>
             <p>
@@ -27,7 +28,8 @@ class dogsLoader {
                 .then(json2 =>{
                     innerstring = innerstring+ '<div>'+breed+'<img src="'+json2.message+'" alt="Random '+breed+'"></div>';
                 }); */
-                innerstring = innerstring +'<li><a href="dogs/'+breed+'">'+breed+'</a></li>';
+                let cleanbreed = site.sanitize(breed);
+                innerstring = innerstring +'<li><a href="dogs/'+cleanbreed+'">'+cleanbreed+'</a></li>';
             }
             innerstring +='</ul>';
             return innerstring;

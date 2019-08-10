@@ -1,6 +1,7 @@
 class aboutLoader {
     constructor(site) {
         this.title = "We are the Taino!";
+        this.meta_desc = "About the Taino JS Framework";
         this.starthtml = `
             <div class="pagewrap about"><h1>About Taino</h1>
             <p>

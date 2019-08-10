@@ -1,5 +1,5 @@
 "use strict";
-/*Run this baby: live-server --port=8080 --open=public --entry-file=index.html*/
+/*Run this baby: live-server --port=8080 --open=home --entry-file=index.html*/
 
 class siteobj{
     constructor() {
@@ -18,14 +18,24 @@ class siteobj{
         this.cur = {};
 
         /*define routes*/
-        this.routes = {
+        let routes = {
             '/':'home',
             '/home':'home',
             '/about':'about',
             '/contact':'contact',
             '/examples':'examples',
-            '/dogs':'dogs'
+            '/dogs':'dogs',
+            '/dogs/:breed':'breed'
         }
+        this.routes = Object.keys(routes)
+            .sort(function(a,b){ return b.length - a.length; })
+            .map(function(path) {
+            return {
+                path: new RegExp("^" + path.replace(/:[^\s/]+/g, '([\\w-]+)') + "$"),
+                module: routes[path]
+            };
+        });
+        this.routevars=[];
 
         this.components = new Map();
 
@@ -59,12 +69,22 @@ class siteobj{
     }
 
     getcurrent(path){
-        let curr = '';
+        let curr = '/404'; /*Need to make this have a 404 header*/
+
+        for (var i = 0, l = this.routes.length; i < l; i++) {
+            var found = path.match(this.routes[i].path);
+            if(found){ 
+                curr ="/"+this.routes[i].module; // module to load
+                this.routevars =  found.slice(1); // arguments for module
+                break;
+            }
+        }
+/*
         if(Object.keys(this.routes).some(function(k){ return ~k.indexOf(path) })) {
             curr = (path == '/' ? "/home" : path);
         }else{
-            curr = "/404"; /*Need to make this have a 404 header*/
-        }
+            curr = "/404"; /*Need to make this have a 404 header*
+    }*/
         return curr;
     }
 
@@ -86,6 +106,7 @@ class siteobj{
             site.cur = Function(`return new ${loader}()`)(); /*filename+'Loader' has to be the main class.*/
             site.main.content.innerHTML = site.cur.starthtml;
             document.title = site.cur.title;
+            site.el('meta[name=description]').setAttribute("content",site.cur.meta_desc);
             site.defaultlisteners();
             site.loadstyling(loader);
         }else{
@@ -93,6 +114,7 @@ class siteobj{
                 site.cur = Function(`return new ${loader}()`)(); /*filename+'Loader' has to be the main class.*/
                 site.main.content.innerHTML = site.cur.starthtml;
                 document.title = site.cur.title;
+                site.el('meta[name=description]').setAttribute("content",site.cur.meta_desc);
                 site.defaultlisteners();
                 site.loadstyling(loader);
             });
@@ -125,13 +147,19 @@ class siteobj{
     }
 
     route(path){
-        if(Object.keys(site.routes).some(function(k){ return ~k.indexOf(path) })) {
+        for (var i = 0, l = site.routes.length; i < l; i++) {
+            var found = path.match(site.routes[i].path);
+            if(found){ 
+                window.history.pushState({"html": site.main.innerHTML, "pageTitle": site.cur.title}, "", path);
+                site.update();
+                break;
+            }
+          }
+       /* if(Object.keys(site.routes).some(function(k){ return ~k.indexOf(path) })) {
             console.log(path);
-            window.history.pushState({"html": site.main.innerHTML, "pageTitle": site.cur.title}, "", path);
-            site.update();
         }else{
 
-        }
+        }*/
     }
 
     xhr(url, data, callback){
@@ -187,6 +215,11 @@ class siteobj{
             }
         }
     }
+    sanitize(str) {
+        let temp = document.createElement('div');
+        temp.textContent = str;
+        return temp.innerHTML;
+    };
 };
 let site = new siteobj();
 site.loadtemplate();
