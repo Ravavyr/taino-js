@@ -42,11 +42,14 @@ class siteobj{
         /*on browser load, identify current location object*/
         this.currentpage = this.getcurrent(window.location.pathname);
         this.main = window.document.body; /*defaults to body if no id is set*/
-        let maindiv = document.createElement('div');
-        maindiv.setAttribute('id','tainomain');
-        this.main.appendChild(maindiv);
-        this.main.content = document.getElementById('tainomain');
-
+        if(document.getElementById('tainomain')!=null){
+            this.main.content = document.getElementById('tainomain');
+        }else{
+            let maindiv = document.createElement('div');
+            maindiv.setAttribute('id','tainomain');
+            this.main.appendChild(maindiv);
+            this.main.content = document.getElementById('tainomain');
+        }
         //beforebegin, afterbegin, afterend
     }
 
@@ -59,7 +62,7 @@ class siteobj{
             script.async = false;
             script.type = 'text/javascript';
             script.src = url;
-            script.dataset.pageid = url;
+            script.dataset.pageid = url;            
             if(typeof(callback)=="function") {
                 script.onreadystatechange = callback;
                 script.onload = callback;
@@ -69,11 +72,12 @@ class siteobj{
     }
 
     getcurrent(path){
-        let curr = '/404'; /*Need to make this have a 404 header*/
+        let curr = '/fourohfour'; /*Need to make this have a 404 header*/
 
         for (var i = 0, l = this.routes.length; i < l; i++) {
-            var found = path.match(this.routes[i].path);
+            var found = path.replace(".html","").match(this.routes[i].path);
             if(found){ 
+                this.removemeta("robots");
                 curr ="/"+this.routes[i].module; // module to load
                 this.routevars =  found.slice(1); // arguments for module
                 break;
@@ -91,11 +95,14 @@ class siteobj{
     loadtemplate(){
         this.loadScript(site.jspath+site.templatefile+'.js',function(){
             var loader = site.templatefile.replace("/","") + 'Loader';
-            site.templateobject = Function(`return new ${loader}()`)(); /*filename+'Loader' has to be the main class.*/
+            if(typeof window[loader] !== "function"){
+                site.templateobject = Function(`return new ${loader}()`)(); /*filename+'Loader' has to be the main class.*/
+            }
             site.main.header = site.templateobject.header;
             site.main.footer = site.templateobject.footer;
             site.main.content.insertAdjacentHTML('beforebegin',site.main.header);
             site.main.content.insertAdjacentHTML('afterend',site.main.footer);
+            
         });
     }
 
@@ -219,7 +226,20 @@ class siteobj{
         let temp = document.createElement('div');
         temp.textContent = str;
         return temp.innerHTML;
-    };
+    }
+
+    addmeta(name, content){
+        var newmeta = document.createElement("meta");
+        newmeta.name=name;
+        newmeta.content=content;
+        document.head.appendChild(newmeta);
+    }
+    removemeta(name){
+        var oldmeta = document.querySelector("meta[name="+name+"]");
+        if(oldmeta){
+            oldmeta.remove();
+        }
+    }
 };
 let site = new siteobj();
 site.loadtemplate();
