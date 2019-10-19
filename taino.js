@@ -169,14 +169,18 @@ class siteobj{
         }*/
     }
 
-    xhr(url, data, callback){
+    xhr(type,url, data, callback){
         var r = new XMLHttpRequest();
-        r.open("POST", url, true);
-        r.setRequestHeader("Accept", "application/json");
-        r.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+        r.open(type.toUpperCase(), url, true);
+        //r.setRequestHeader("Accept", "application/json");
+        //r.setRequestHeader("Content-Type", "application/json; charset=utf-8");
         r.onreadystatechange = function () {
-            if (r.readyState != 4 || r.status != 200){ return;}
-            else { callback(r.responseText); }
+            if (r.readyState !== 4) return;
+            if (r.status >= 200 && r.status < 300) {
+                callback(r.responseText);
+            } else {
+                console.log('error',r);
+            }
         };
         r.send(data);
     }
@@ -240,7 +244,9 @@ class siteobj{
             oldmeta.remove();
         }
     }
+
 };
+
 let site = new siteobj();
 site.loadtemplate();
 site.loadcontent();

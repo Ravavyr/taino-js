@@ -24,7 +24,7 @@ header nav a:hover{background:#666; color:#fff;}
 footer{width:100%; background:#333; text-align:center; height:100px; line-height:100px;}
 
 /*PAGES*/
-.pagewrap{margin:0 auto; min-height:80vh; width:100%; font-size:40px; text-align:center; color:#fff;}
+.pagewrap{margin:0 auto; min-height:80vh; width:100%; font-size:20px; text-align:center; color:#fff;}
 .home .pagewrap{ }
 .about .pagewrap{ }
 .contact .pagewrap{ }
