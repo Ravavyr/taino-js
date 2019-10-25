@@ -4,7 +4,6 @@
 class siteobj{
     constructor() {
         /*define taino global vars, mostly endpoints and public creds*/
-        this.serverurl = 'https://dog.ceo/api/';
         this.jspath = '/js';
         this.csspath = '/css';
         this.header = ''; /*sitewide header defined in template.js or wherever*/
@@ -20,12 +19,11 @@ class siteobj{
         /*define routes*/
         let routes = {
             '/':'home',
-            '/home':'home',
-            '/about':'about',
+            '/about':'about',            
+            '/docs':'docs',
+            '/frequently-asked-questions':'faq',
             '/contact':'contact',
-            '/examples':'examples',
-            '/dogs':'dogs',
-            '/dogs/:breed':'breed'
+            '/license':'license'
         }
         this.routes = Object.keys(routes)
             .sort(function(a,b){ return b.length - a.length; })
@@ -126,24 +124,6 @@ class siteobj{
                 site.loadstyling(loader);
             });
         }
-            /*   
-        }else if(site.currentpage=='/game'){
-            site.loadScript('/js/socket.js',function(){
-                site.sock = io(site.socketurl,{'reconnectionAttempts' : '4','query':'verify='+site.state.sessk});
-                site.sock.on('connect_error', function(err) {
-                    console.log(err);
-                });
-                site.sock.on('reload', function(err) {
-                    location.reload();
-                });
-                site.cur = new gamewrap(site);
-                site.main.innerHTML = site.cur.starthtml;
-                site.cur.loadhtmlobjects();
-            });
-        }else{
-            //site.cur = new fourohfourpage(this);
-            site.main.innerHTML = 'no page here'; //site.cur.starthtml;
-        }*/
     }
 
     update(){
