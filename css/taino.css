@@ -22,7 +22,7 @@ a:hover{ color:#33f;}
 #tainomain{min-height:500px;}
 
 /*TEMPLATE*/
-header{width:100%; background:#0D1219; text-align:center; height:80px; padding-top:50px;}
+header{width:100%; background:rgb(13, 18, 25); text-align:center; height:80px; padding-top:50px;}
 header nav{width:100%; max-width:1200px; margin:0 auto; height:40px; }
 header nav a{height:40px; line-height:40px;display:inline-block; vertical-align:top; padding:0 12px; margin:0 0.4rem; font-size:16px; color:#123; background:#ddd; text-align:center; text-transform:uppercase; font-weight:bold; box-shadow:6px 6px #00A128; transition:all 0.1s;}
 header nav a:hover{color:#123; box-shadow:3px 3px #00FF40;}
@@ -30,14 +30,14 @@ footer{width:100%; background:#333; text-align:center; height:100px; line-height
 
 /*PAGES*/
 .pagewrap{position:relative; overflow:hidden; z-index:1; margin:0 auto; min-height:80vh; width:100%; padding:4rem; font-size:20px; text-align:center; color:#fff; }
-.pagewrap:before{content:' '; position:absolute; top:0; right:0; width:40rem; height:40rem; transform:rotate(-40deg); background:url(../images/taino-cemi.svg) no-repeat top right; background-size:contain; opacity:0.2; z-index:-1;}
-.pagewrap:after{content:' '; position:absolute; top:5vh; left:5vw; width:40rem; height:40rem; transform:rotate(-30deg); background:url(../images/taino-sun.svg) no-repeat top right; background-size:contain; opacity:0.2; z-index:-1;}
+.pagewrap:before{content:' '; position:absolute; top:0; right:0; width:40rem; height:40rem; transform:rotate(-40deg); background:url(../images/taino-cemi.svg) no-repeat top right; background-size:contain; opacity:0.4; z-index:-1;}
+.pagewrap:after{content:' '; position:absolute; top:5vh; left:5vw; width:40rem; height:40rem; transform:rotate(-30deg); background:url(../images/taino-sun.svg) no-repeat top right; background-size:contain; opacity:0.4; z-index:-1;}
 .pagewrap .content{padding:2rem; width:90%; max-width:1200px; margin:0 auto;}
 .pagewrap .content a{color:#00FF40;}
 .pagewrap .content a:hover:before{content:"<"; color:#00FF40; text-decoration:none;}
 .pagewrap .content a:hover:after{content:">"; color:#00FF40; text-decoration:none;}
-.home h1 span{display:block; font-size:2.5rem; color:#00A128; }
-.home .two-blocks{display:flex; justify-content:space-between; flex-wrap:wrap;}
-.home .two-blocks .block{width:48%; max-width:600px; border:4px solid #00A128; border-radius:8px; padding:.4rem; }
+.home h1 span{display:block; font-size:2.5rem; font-weight:normal; font-style:italic; color:#00A128; }
+.home .two-blocks{display:flex; justify-content:space-around; flex-wrap:wrap;}
+.home .two-blocks .block{width:48%; max-width:600px; border:4px solid #00A128; border-radius:8px; padding:.4rem; background:rgba(13, 18, 25,0.8); }
 .about .pagewrap{ }
 .contact .pagewrap{ }

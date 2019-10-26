@@ -12,11 +12,14 @@ class homeLoader {
                 <div class="two-blocks">
                     <div class="block">
                         <h2>Our Purpose</h2>
+                        <p>
+                            The goal was to create a script/framework/library that would allow anyone to quickly build websites using minimal html/css/javascript                        
+                        </p>
                     </div>
                     <div class="block">
                         <h2>Questions about Taino</h2>
                     </div>         
-                <div>
+                </div>
             
             </div>
         `;
