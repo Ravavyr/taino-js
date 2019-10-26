@@ -119,7 +119,7 @@ class taino{
             this.cur = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
             this.main.content.innerHTML = this.cur.starthtml;
             document.title = this.cur.title;
-            this.el('meta[name=description]').setAttribute("content",this.cur.meta_desc);
+            taino.el('meta[name=description]').setAttribute("content",this.cur.meta_desc);
             this.defaultlisteners();
             this.loadstyling(loader);
         }else{
@@ -127,7 +127,7 @@ class taino{
                 this.cur = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
                 this.main.content.innerHTML = this.cur.starthtml;
                 document.title = this.cur.title;
-                this.el('meta[name=description]').setAttribute("content",this.cur.meta_desc);
+                taino.el('meta[name=description]').setAttribute("content",this.cur.meta_desc);
                 this.defaultlisteners();
                 this.loadstyling(loader);
             });
@@ -185,7 +185,7 @@ class taino{
         return document.getElementById(x);
     }
     defaultlisteners(){
-        let as = this.el("a:not(.cap)",true); /*recapture A tags when content reloads*/
+        let as = taino.el("a:not(.cap)",true); /*recapture A tags when content reloads*/
         for(let i=0; i<as.length; i++){
             as[i].classList.add("cap");
             let linkhost = as[i].hostname;
@@ -205,7 +205,7 @@ class taino{
     loadstyling(loader){ /*loads in styling from a component*/
         if(!this.cur.styling){return ;}
         else{
-            if(!this.el('style.'+loader)){
+            if(!taino.el('style.'+loader)){
                 let body = document.body;
                 let style = document.createElement('style');
                 style.type = 'text/css';
