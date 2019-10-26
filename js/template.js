@@ -13,7 +13,7 @@ class templateLoader {
         `;        
         this.footer = `
             <footer>
-                Copyright TainoJS&reg;<br>
+                Copyright TainoJS&reg; - 2019<br>
                 <a href="/license">MIT Style License</a>
             </footer>            
         `;
