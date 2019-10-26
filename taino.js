@@ -53,15 +53,30 @@ class taino{
 
 
     createLoader(loader){
-        if(typeof window[loader] !== "function") {
-            return Function(`return new ${loader}()`)(); /*filename+'Loader' has to be the main class.*/
+          if(typeof window[loader] !== "function") {
+            return Function("site", `return new ${loader}(site)`)(this); /*filename+'Loader' has to be the main class.*/
         }
         throw new Error(`${loader} constructor does not exist!`);
     }
 
     /*additional scripts are loaded via callbacks*/
     loadScript(url, callback){
-        if(typeof(callback)=="function" && taino.el('script[data-pageid="'+url+'"]')){ callback(); }
+        let resolve = null
+        let reject = null
+        let scriptPromise = new Promise((res,rej)=>{
+          resolve = res;
+          reject = rej;
+        });
+
+        function callbackPromise(){
+            return new Promise((res,rej)=>{
+              callback();
+              res();
+            });
+        }
+        if(typeof(callback)=="function" && taino.el('script[data-pageid="'+url+'"]')){
+          return callbackPromise();
+        }
         else {
             let body = document.body;
             let script = document.createElement('script');
@@ -70,10 +85,12 @@ class taino{
             script.src = url;
             script.dataset.pageid = url;
             if(typeof(callback)=="function") {
-                script.onreadystatechange = callback;
-                script.onload = callback;
+                script.onreadystatechange = resolve;
+                script.onload = resolve;
             }
+            scriptPromise.then(callbackPromise);
             body.appendChild(script);
+            return scriptPromise;
         }
     }
 
@@ -107,12 +124,10 @@ class taino{
             this.main.content.insertAdjacentHTML('beforebegin',this.main.header);
             this.main.content.insertAdjacentHTML('afterend',this.main.footer);
         }
-        this.loadScript(this.jspath+this.templatefile+'.js',callback);
+        return this.loadScript(this.jspath+this.templatefile+'.js',callback);
     }
 
     loadcontent(){
-
-
         this.main.setAttribute("class",this.currentpage.replace("/",""));
         var loader = this.currentpage.replace("/","") + 'Loader';
         if(this.cur.constructor.name && this.cur.constructor.name===loader){
@@ -137,7 +152,7 @@ class taino{
     update(){
         var path =window.location.pathname;
         this.currentpage = this.getcurrent(path);
-        this.loadScript(this.jspath+this.currentpage+'.js',this.loadcontent);
+        return this.loadScript(this.jspath+this.currentpage+'.js',()=>this.loadcontent());
 
     }
 
@@ -236,6 +251,10 @@ class taino{
 
 };
 
-let site = new taino();
-site.loadtemplate();
-site.loadcontent();
+(async function(){
+  const site = new taino();
+  await site.loadtemplate()
+  site.loadcontent();
+})();
+
+
