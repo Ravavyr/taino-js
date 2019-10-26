@@ -189,7 +189,7 @@ class taino{
         for(let i=0; i<as.length; i++){
             as[i].classList.add("cap");
             let linkhost = as[i].hostname;
-            as[i].addEventListener('click', function(e){
+            as[i].addEventListener('click', (e) => {
                 e.preventDefault();
                 let pathName = new URL(this.href);
                 if(pathName.hostname === linkhost){
