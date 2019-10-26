@@ -6,7 +6,7 @@ class homeLoader {
             <div class="pagewrap home">
                 <h1>Taino JS<span>A simple code base for making websites</span></h1>
                 <div class="content">
-                    <a href="/docs" title="Start learning Taino">Get Started!</a>
+                    <a class="btn" href="/docs" title="Start learning Taino">Get Started!</a>
                 </div>
 
                 <div class="two-blocks">
@@ -27,7 +27,7 @@ class homeLoader {
                     </div>         
                 </div>
                 <div class="content">
-                    <a href="/docs" title="Start learning Taino">Get Started!</a>
+                    <a class="btn" href="/docs" title="Start learning Taino">Get Started!</a>
                 </div>
             
             </div>

@@ -4,7 +4,8 @@ class docsLoader {
         this.meta_desc = "Examples for uses of the Taino JS Framework";
         this.starthtml = `
             <div class="pagewrap about"><h1>Taino 101</h1>
-            <p>stuff and things go here
+            <p>
+                Coming Soon
             </p>
 
             </div>

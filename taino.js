@@ -1,5 +1,5 @@
 "use strict";
-/*Run this baby: live-server --port=8080 --open=home --entry-file=index.html*/
+/*Run this baby: live-server --port=8080 --entry-file=index.html*/
 
 class siteobj{
     constructor() {
@@ -180,6 +180,7 @@ class siteobj{
         let as = site.el("a:not(.cap)",true); /*recapture A tags when content reloads*/
         for(let i=0; i<as.length; i++){
             as[i].classList.add("cap");
+            if(as[i].getAttribute("target")=="_blank"){continue;}
             let linkhost = as[i].hostname;
             as[i].addEventListener('click', function(e){
                 e.preventDefault();
