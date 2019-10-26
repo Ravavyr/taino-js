@@ -1,7 +1,7 @@
 "use strict";
 /*Run this baby: live-server --port=8080 --open=home --entry-file=index.html*/
 
-class siteobj{
+class taino{
     constructor() {
         /*define taino global vars, mostly endpoints and public creds*/
         this.jspath = '/js';
@@ -61,7 +61,7 @@ class siteobj{
 
     /*additional scripts are loaded via callbacks*/
     loadScript(url, callback){
-        if(typeof(callback)=="function" && site.el('script[data-pageid="'+url+'"]')){ callback(); }
+        if(typeof(callback)=="function" && taino.el('script[data-pageid="'+url+'"]')){ callback(); }
         else {
             let body = document.body;
             let script = document.createElement('script');
@@ -235,6 +235,6 @@ class siteobj{
 
 };
 
-let site = new siteobj();
+let site = new taino();
 site.loadtemplate();
 site.loadcontent();
