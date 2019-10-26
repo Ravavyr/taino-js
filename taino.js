@@ -191,9 +191,10 @@ class taino{
             let linkhost = as[i].hostname;
             as[i].addEventListener('click', (e) => {
                 e.preventDefault();
-                let pathName = new URL(this.href);
+                let href = as[i].href
+                let pathName = new URL(href);
                 if(pathName.hostname === linkhost){
-                    window.history.pushState({}, pathName, this.href);
+                    window.history.pushState({}, pathName, href);
                     this.update();
                 }else{
                     window.location.href = pathName;
