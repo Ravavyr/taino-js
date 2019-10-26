@@ -23,7 +23,7 @@ a:hover{ color:#33f;}
 
 /*TEMPLATE*/
 header{width:100%; background:rgb(13, 18, 25); text-align:center; height:80px; padding-top:50px;}
-header nav{width:100%; max-width:1200px; margin:0 auto; height:40px; }
+header nav{width:96%; max-width:1200px; margin:0 auto; height:40px; }
 header nav a{height:40px; line-height:40px;display:inline-block; vertical-align:top; padding:0 12px; margin:0 0.4rem; font-size:16px; color:#123; background:#ddd; text-align:center; text-transform:uppercase; font-weight:bold; box-shadow:6px 6px #00A128; transition:all 0.1s;}
 header nav a:hover{color:#123; box-shadow:3px 3px #00FF40;}
 footer{width:100%; background:#333; color:#fff; text-align:center; height:100px; padding:20px;}
@@ -52,7 +52,7 @@ footer a:hover:after{content:">"; color:#fff; text-decoration:none;}
     .home .two-blocks .block{width:90%; margin-bottom:1rem;}
 }
 @media screen and (max-width:640px){
-    header{padding-top:30px;}
+    header{padding-top:30px; position:relative; z-index:2;}
     header nav a{margin-bottom:12px;}
     .pagewrap{padding:4rem 1rem;}
     .pagewrap:before{display:none;}
