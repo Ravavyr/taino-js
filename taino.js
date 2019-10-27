@@ -60,35 +60,33 @@ class taino{
     }
 
     /*additional scripts are loaded via callbacks*/
-    loadScript(url, callback){
-        let resolve = null
-        let reject = null
-        let scriptPromise = new Promise((res,rej)=>{
-          resolve = res;
-          reject = rej;
-        });
+    loadScript(url){
+        /*
+        This script returns a promise that resolves when the requested script loads
+        or rejects if the requested script doesn't load (think 404 error)
 
-        function callbackPromise(){
-            return new Promise((res,rej)=>{
-              callback();
-              res();
-            });
-        }
-        if(typeof(callback)=="function" && taino.el('script[data-pageid="'+url+'"]')){
-          return callbackPromise();
+        having a rejection on error allows us to potentially redirect gracefully to a 404 page or what have you.
+         */
+        if(taino.el('script[data-pageid="'+url+'"]')){
+            // script already exists. return a resolved promise.
+          return Promise.resolve()
         }
         else {
+            let resolve = null
+            let reject = null
+            let scriptPromise = new Promise((res,rej)=>{
+                resolve = res;
+                reject = rej;
+            });
             let body = document.body;
             let script = document.createElement('script');
             script.async = false;
             script.type = 'text/javascript';
             script.src = url;
             script.dataset.pageid = url;
-            if(typeof(callback)=="function") {
-                script.onreadystatechange = resolve;
-                script.onload = resolve;
-            }
-            scriptPromise.then(callbackPromise);
+            script.onreadystatechange = resolve;
+            script.onload = resolve;
+            script.onerror = reject;
             body.appendChild(script);
             return scriptPromise;
         }
@@ -124,7 +122,7 @@ class taino{
             this.main.content.insertAdjacentHTML('beforebegin',this.main.header);
             this.main.content.insertAdjacentHTML('afterend',this.main.footer);
         }
-        return this.loadScript(this.jspath+this.templatefile+'.js',callback);
+        return this.loadScript(this.jspath+this.templatefile+'.js').then(callback);
     }
 
     loadcontent(){
@@ -138,7 +136,7 @@ class taino{
             this.defaultlisteners();
             this.loadstyling(loader);
         }else{
-            this.loadScript(this.jspath+this.currentpage+'.js',() => {
+            this.loadScript(this.jspath+this.currentpage+'.js').then(() => {
                 this.cur = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
                 this.main.content.innerHTML = this.cur.starthtml;
                 document.title = this.cur.title;
@@ -152,7 +150,7 @@ class taino{
     update(){
         var path =window.location.pathname;
         this.currentpage = this.getcurrent(path);
-        return this.loadScript(this.jspath+this.currentpage+'.js',()=>this.loadcontent());
+        return this.loadScript(this.jspath+this.currentpage+'.js').then(()=>this.loadcontent());
 
     }
 
@@ -251,10 +249,9 @@ class taino{
 
 };
 
-(async function(){
-  const site = new taino();
-  await site.loadtemplate()
-  site.loadcontent();
-})();
+
+const site = new taino();
+site.loadtemplate();
+site.loadcontent();
 
 
