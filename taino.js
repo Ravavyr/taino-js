@@ -1,7 +1,7 @@
 "use strict";
 /*Run this baby: live-server --port=8080 --entry-file=index.html*/
 
-class siteobj{
+class taino{
     constructor() {
         /*define taino global vars, mostly endpoints and public creds*/
         this.jspath = '/js';
@@ -19,7 +19,7 @@ class siteobj{
         /*define routes*/
         let routes = {
             '/':'home',
-            '/about':'about',            
+            '/about':'about',
             '/docs':'docs',
             '/frequently-asked-questions':'faq',
             '/contact':'contact',
@@ -51,21 +51,44 @@ class siteobj{
         //beforebegin, afterbegin, afterend
     }
 
+
+    createLoader(loader){
+          if(typeof window[loader] !== "function") {
+            return Function("site", `return new ${loader}(site)`)(this); /*filename+'Loader' has to be the main class.*/
+        }
+        throw new Error(`${loader} constructor does not exist!`);
+    }
+
     /*additional scripts are loaded via callbacks*/
-    loadScript(url, callback){
-        if(typeof(callback)=="function" && site.el('script[data-pageid="'+url+'"]')){ callback(); }
+    loadScript(url){
+        /*
+        This script returns a promise that resolves when the requested script loads
+        or rejects if the requested script doesn't load (think 404 error)
+
+        having a rejection on error allows us to potentially redirect gracefully to a 404 page or what have you.
+         */
+        if(taino.el('script[data-pageid="'+url+'"]')){
+            // script already exists. return a resolved promise.
+          return Promise.resolve()
+        }
         else {
+            let resolve = null
+            let reject = null
+            let scriptPromise = new Promise((res,rej)=>{
+                resolve = res;
+                reject = rej;
+            });
             let body = document.body;
             let script = document.createElement('script');
             script.async = false;
             script.type = 'text/javascript';
             script.src = url;
-            script.dataset.pageid = url;            
-            if(typeof(callback)=="function") {
-                script.onreadystatechange = callback;
-                script.onload = callback;
-            }
+            script.dataset.pageid = url;
+            script.onreadystatechange = resolve;
+            script.onload = resolve;
+            script.onerror = reject;
             body.appendChild(script);
+            return scriptPromise;
         }
     }
 
@@ -74,7 +97,7 @@ class siteobj{
 
         for (var i = 0, l = this.routes.length; i < l; i++) {
             var found = path.replace(".html","").match(this.routes[i].path);
-            if(found){ 
+            if(found){
                 this.removemeta("robots");
                 curr ="/"+this.routes[i].module; // module to load
                 this.routevars =  found.slice(1); // arguments for module
@@ -91,54 +114,52 @@ class siteobj{
     }
 
     loadtemplate(){
-        this.loadScript(site.jspath+site.templatefile+'.js',function(){
-            var loader = site.templatefile.replace("/","") + 'Loader';
-            if(typeof window[loader] !== "function"){
-                site.templateobject = Function(`return new ${loader}()`)(); /*filename+'Loader' has to be the main class.*/
-            }
-            site.main.header = site.templateobject.header;
-            site.main.footer = site.templateobject.footer;
-            site.main.content.insertAdjacentHTML('beforebegin',site.main.header);
-            site.main.content.insertAdjacentHTML('afterend',site.main.footer);
-            
-        });
+        const callback = () =>{
+            var loader = this.templatefile.replace("/","") + 'Loader';
+            this.templateobject = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
+            this.main.header = this.templateobject.header;
+            this.main.footer = this.templateobject.footer;
+            this.main.content.insertAdjacentHTML('beforebegin',this.main.header);
+            this.main.content.insertAdjacentHTML('afterend',this.main.footer);
+        }
+        return this.loadScript(this.jspath+this.templatefile+'.js').then(callback);
     }
 
-    loadcontent(){        
-        site.main.setAttribute("class",site.currentpage.replace("/",""));        
-        var loader = site.currentpage.replace("/","") + 'Loader';
-        if(site.cur.constructor.name && site.cur.constructor.name==loader){
-            site.cur = Function(`return new ${loader}()`)(); /*filename+'Loader' has to be the main class.*/
-            site.main.content.innerHTML = site.cur.starthtml;
-            document.title = site.cur.title;
-            site.el('meta[name=description]').setAttribute("content",site.cur.meta_desc);
-            site.defaultlisteners();
-            site.loadstyling(loader);
+    loadcontent(){
+        this.main.setAttribute("class",this.currentpage.replace("/",""));
+        var loader = this.currentpage.replace("/","") + 'Loader';
+        if(this.cur.constructor.name && this.cur.constructor.name===loader){
+            this.cur = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
+            this.main.content.innerHTML = this.cur.starthtml;
+            document.title = this.cur.title;
+            taino.el('meta[name=description]').setAttribute("content",this.cur.meta_desc);
+            this.defaultlisteners();
+            this.loadstyling(loader);
         }else{
-            site.loadScript(site.jspath+site.currentpage+'.js',function(){                
-                site.cur = Function(`return new ${loader}()`)(); /*filename+'Loader' has to be the main class.*/
-                site.main.content.innerHTML = site.cur.starthtml;
-                document.title = site.cur.title;
-                site.el('meta[name=description]').setAttribute("content",site.cur.meta_desc);
-                site.defaultlisteners();
-                site.loadstyling(loader);
+            this.loadScript(this.jspath+this.currentpage+'.js').then(() => {
+                this.cur = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
+                this.main.content.innerHTML = this.cur.starthtml;
+                document.title = this.cur.title;
+                taino.el('meta[name=description]').setAttribute("content",this.cur.meta_desc);
+                this.defaultlisteners();
+                this.loadstyling(loader);
             });
         }
     }
 
     update(){
         var path =window.location.pathname;
-        site.currentpage = site.getcurrent(path);
-        site.loadScript(site.jspath+site.currentpage+'.js',site.loadcontent);
+        this.currentpage = this.getcurrent(path);
+        return this.loadScript(this.jspath+this.currentpage+'.js').then(()=>this.loadcontent());
 
     }
 
     route(path){
-        for (var i = 0, l = site.routes.length; i < l; i++) {
-            var found = path.match(site.routes[i].path);
-            if(found){ 
-                window.history.pushState({"html": site.main.innerHTML, "pageTitle": site.cur.title}, "", path);
-                site.update();
+        for (var i = 0, l = this.routes.length; i < l; i++) {
+            var found = path.match(this.routes[i].path);
+            if(found){
+                window.history.pushState({"html": this.main.innerHTML, "pageTitle": this.cur.title}, "", path);
+                this.update();
                 break;
             }
           }
@@ -149,7 +170,7 @@ class siteobj{
         }*/
     }
 
-    xhr(type,url, data, callback){
+    static xhr(type,url, data, callback){
         var r = new XMLHttpRequest();
         r.open(type.toUpperCase(), url, true);
         //r.setRequestHeader("Accept", "application/json");
@@ -165,7 +186,7 @@ class siteobj{
         r.send(data);
     }
 
-    el(x, getall){
+    static el(x, getall){
         var s = x.trim();
         if(s.indexOf(",") > -1 || s.indexOf(" ") > -1 || getall===true){
             return document.querySelectorAll(s);
@@ -173,21 +194,22 @@ class siteobj{
             return document.querySelector(s);
         }
     }
-    elid(x){
+    static elid(x){
         return document.getElementById(x);
     }
     defaultlisteners(){
-        let as = site.el("a:not(.cap)",true); /*recapture A tags when content reloads*/
+        let as = taino.el("a:not(.cap)",true); /*recapture A tags when content reloads*/
         for(let i=0; i<as.length; i++){
             as[i].classList.add("cap");
             if(as[i].getAttribute("target")=="_blank"){continue;}
             let linkhost = as[i].hostname;
-            as[i].addEventListener('click', function(e){
+            as[i].addEventListener('click', (e) => {
                 e.preventDefault();
-                let pathName = new URL(this.href);
-                if(pathName.hostname === linkhost){                    
-                    window.history.pushState({}, pathName, this.href);  
-                    site.update();
+                let href = as[i].href
+                let pathName = new URL(href);
+                if(pathName.hostname === linkhost){
+                    window.history.pushState({}, pathName, href);
+                    this.update();
                 }else{
                     window.location.href = pathName;
                 }
@@ -196,18 +218,18 @@ class siteobj{
         }
     }
     loadstyling(loader){ /*loads in styling from a component*/
-        if(!site.cur.styling){return ;}
+        if(!this.cur.styling){return ;}
         else{
-            if(!site.el('style.'+loader)){
+            if(!taino.el('style.'+loader)){
                 let body = document.body;
                 let style = document.createElement('style');
                 style.type = 'text/css';
-                style.innerHTML=site.cur.styling;
+                style.innerHTML=this.cur.styling;
                 body.appendChild(style);
             }
         }
     }
-    sanitize(str) {
+    static sanitize(str) {
         let temp = document.createElement('div');
         temp.textContent = str;
         return temp.innerHTML;
@@ -228,6 +250,9 @@ class siteobj{
 
 };
 
-let site = new siteobj();
+
+const site = new taino();
 site.loadtemplate();
 site.loadcontent();
+
+
