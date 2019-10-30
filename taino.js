@@ -245,7 +245,7 @@ let routes = {
     '/docs':'docs',
     '/frequently-asked-questions':'faq',
     '/contact':'contact',
-    '/license':'license'
+    '/mit-license':'license'
 }
 
 const site = new taino(routes);
