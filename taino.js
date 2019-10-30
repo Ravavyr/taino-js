@@ -2,7 +2,7 @@
 /*Run this baby: live-server --port=8080 --entry-file=index.html*/
 
 class taino{
-    constructor() {
+    constructor(routes) {
         /*define taino global vars, mostly endpoints and public creds*/
         this.jspath = '/js';
         this.csspath = '/css';
@@ -15,16 +15,7 @@ class taino{
 
         /*define current location object*/
         this.cur = {};
-
-        /*define routes*/
-        let routes = {
-            '/':'home',
-            '/about':'about',
-            '/docs':'docs',
-            '/frequently-asked-questions':'faq',
-            '/contact':'contact',
-            '/license':'license'
-        }
+        
         this.routes = Object.keys(routes)
             .sort(function(a,b){ return b.length - a.length; })
             .map(function(path) {
@@ -49,6 +40,10 @@ class taino{
             this.main.content = document.getElementById('tainomain');
         }
         //beforebegin, afterbegin, afterend
+        
+        window.addEventListener('popstate', (event) => {
+            this.update();
+        });
     }
 
 
@@ -104,12 +99,6 @@ class taino{
                 break;
             }
         }
-/*
-        if(Object.keys(this.routes).some(function(k){ return ~k.indexOf(path) })) {
-            curr = (path == '/' ? "/home" : path);
-        }else{
-            curr = "/404"; /*Need to make this have a 404 header*
-    }*/
         return curr;
     }
 
@@ -151,7 +140,6 @@ class taino{
         var path =window.location.pathname;
         this.currentpage = this.getcurrent(path);
         return this.loadScript(this.jspath+this.currentpage+'.js').then(()=>this.loadcontent());
-
     }
 
     route(path){
@@ -242,7 +230,7 @@ class taino{
         document.head.appendChild(newmeta);
     }
     removemeta(name){
-        var oldmeta = document.querySelector("meta[name="+name+"]");
+        var oldmeta = taino.el("meta[name="+name+"]");
         if(oldmeta){
             oldmeta.remove();
         }
@@ -250,9 +238,16 @@ class taino{
 
 };
 
+/*define routes*/
+let routes = {
+    '/':'home',
+    '/about':'about',
+    '/docs':'docs',
+    '/frequently-asked-questions':'faq',
+    '/contact':'contact',
+    '/license':'license'
+}
 
-const site = new taino();
+const site = new taino(routes);
 site.loadtemplate();
 site.loadcontent();
-
-
