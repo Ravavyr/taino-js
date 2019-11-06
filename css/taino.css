@@ -16,10 +16,13 @@ h1{margin:0; font-size:4rem; }
 h2{}
 h3{}
 ul{list-style-type:none;margin:0;padding:0}
+ul.l{text-align:left; list-style-type: disc; margin-left: 40px;}
 a{color:#C59952; text-decoration:none; }
 a:hover{ color:rgb(235, 148, 10);}
 .hidden{display:none;opacity:0}
 #tainomain{min-height:500px;}
+.goback{float:left; color:#C59952;padding:0.5rem 1rem; border-radius:4px; box-shadow: 0px 0px 5px rgba(13, 18, 25,0.8);background:rgb(13, 18, 25); cursor:pointer;}
+.goback:hover, .goback:active{color:#fff;}
 
 /*TEMPLATE*/
 header{position:relative; z-index:2; width:100%; background:rgb(13, 18, 25); text-align:center; height:80px; padding-top:50px;}
@@ -36,7 +39,7 @@ footer a:hover:after{content:">"; color:#fff; text-decoration:none;}
 .pagewrap{position:relative; overflow:hidden; z-index:1; margin:0 auto; min-height:80vh; width:100%; padding:4rem; font-size:20px; text-align:center; color:#fff; }
 .pagewrap:before{content:' '; position:absolute; top:0; right:0; width:40vw; height:40vw; transform:rotate(-40deg); background:url(../images/taino-cemi.svg) no-repeat top right; background-size:contain; opacity:0.4; z-index:-1;}
 .pagewrap:after{content:' '; position:absolute; top:5vh; left:5vw; width:40vw; height:40vw; transform:rotate(-30deg); background:url(../images/taino-sun.svg) no-repeat top right; background-size:contain; opacity:0.4; z-index:-1;}
-.pagewrap .content{padding:2rem; width:90%; max-width:1200px; margin:0 auto;background:rgba(13, 18, 25,0.8); box-shadow:0px 0px 5px #00A128; border-radius:4px;}
+.pagewrap .content{padding:2rem; width:90%; max-width:1200px; margin:0 auto 40px auto;background:rgba(13, 18, 25,0.8); box-shadow:0px 0px 5px #00A128; border-radius:4px;}
 .pagewrap .content a.btn{color:#fff; padding:0.5rem 1rem; border-radius:4px; box-shadow: 0px 0px 5px #C59952; background: rgba(13, 18, 25,0.8);}
 .pagewrap .content a.btn:hover:before{content:"<"; color:#fff; text-decoration:none;}
 .pagewrap .content a.btn:hover:after{content:">"; color:#fff; text-decoration:none;}

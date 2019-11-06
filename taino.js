@@ -111,8 +111,8 @@ class taino{
     }
 
     loadcontent(){
-        this.main.setAttribute("class",this.currentpage.replace("/",""));
-        var loader = this.currentpage.replace("/","") + 'Loader';
+        this.main.setAttribute("class",this.currentpage.replace(/\//gi,''));
+        var loader = this.currentpage.substr(1).replace(/\//gi,'_') + 'Loader';
         var hashforanchor = window.location.hash.substr(1);
         if(this.cur.constructor.name && this.cur.constructor.name===loader){
             this.cur = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
@@ -232,6 +232,7 @@ let routes = {
     '/':'home',
     '/about':'about',
     '/docs':'docs',
+    '/docs/spa_and_server':'docs/spa_and_server',
     '/frequently-asked-questions':'faq',
     '/contact':'contact',
     '/mit-license':'license'
