@@ -39,8 +39,7 @@ class taino{
             this.main.appendChild(maindiv);
             this.main.content = document.getElementById('tainomain');
         }
-        //beforebegin, afterbegin, afterend
-        
+        //beforebegin, afterbegin, afterend        
         window.addEventListener('popstate', (event) => {
             this.update();
         });
@@ -59,14 +58,12 @@ class taino{
         /*
         This script returns a promise that resolves when the requested script loads
         or rejects if the requested script doesn't load (think 404 error)
-
         having a rejection on error allows us to potentially redirect gracefully to a 404 page or what have you.
          */
         if(taino.el('script[data-pageid="'+url+'"]')){
             // script already exists. return a resolved promise.
           return Promise.resolve()
-        }
-        else {
+        }else{
             let resolve = null
             let reject = null
             let scriptPromise = new Promise((res,rej)=>{
@@ -89,7 +86,6 @@ class taino{
 
     getcurrent(path){
         let curr = '/fourohfour'; /*Need to make this have a 404 header*/
-
         for (var i = 0, l = this.routes.length; i < l; i++) {
             var found = path.replace(".html","").match(this.routes[i].path);
             if(found){
@@ -117,6 +113,7 @@ class taino{
     loadcontent(){
         this.main.setAttribute("class",this.currentpage.replace("/",""));
         var loader = this.currentpage.replace("/","") + 'Loader';
+        var hashforanchor = window.location.hash.substr(1);
         if(this.cur.constructor.name && this.cur.constructor.name===loader){
             this.cur = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
             this.main.content.innerHTML = this.cur.starthtml;
@@ -124,6 +121,9 @@ class taino{
             taino.el('meta[name=description]').setAttribute("content",this.cur.meta_desc);
             this.defaultlisteners();
             this.loadstyling(loader);
+            if(taino.elid(hashforanchor)){
+                window.scrollBy(0, taino.elid(hashforanchor).offsetTop);  
+            }
         }else{
             this.loadScript(this.jspath+this.currentpage+'.js').then(() => {
                 this.cur = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
@@ -132,6 +132,9 @@ class taino{
                 taino.el('meta[name=description]').setAttribute("content",this.cur.meta_desc);
                 this.defaultlisteners();
                 this.loadstyling(loader);
+                if(taino.elid(hashforanchor)){
+                    window.scrollBy(0, taino.elid(hashforanchor).offsetTop);  
+                }
             });
         }
     }
@@ -139,7 +142,10 @@ class taino{
     update(){
         var path =window.location.pathname;
         this.currentpage = this.getcurrent(path);
-        return this.loadScript(this.jspath+this.currentpage+'.js').then(()=>this.loadcontent());
+        this.loadScript(this.jspath+this.currentpage+'.js').then(()=>{
+            this.loadcontent();
+            window.scrollTo(0,0);            
+        });
     }
 
     route(path){
@@ -150,28 +156,7 @@ class taino{
                 this.update();
                 break;
             }
-          }
-       /* if(Object.keys(site.routes).some(function(k){ return ~k.indexOf(path) })) {
-            console.log(path);
-        }else{
-
-        }*/
-    }
-
-    static xhr(type,url, data, callback){
-        var r = new XMLHttpRequest();
-        r.open(type.toUpperCase(), url, true);
-        //r.setRequestHeader("Accept", "application/json");
-        //r.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-        r.onreadystatechange = function () {
-            if (r.readyState !== 4) return;
-            if (r.status >= 200 && r.status < 300) {
-                callback(r.responseText);
-            } else {
-                console.log('error',r);
-            }
-        };
-        r.send(data);
+        }
     }
 
     static el(x, getall){
@@ -182,9 +167,11 @@ class taino{
             return document.querySelector(s);
         }
     }
+
     static elid(x){
         return document.getElementById(x);
     }
+
     defaultlisteners(){
         let as = taino.el("a:not(.cap)",true); /*recapture A tags when content reloads*/
         for(let i=0; i<as.length; i++){
@@ -193,7 +180,7 @@ class taino{
             let linkhost = as[i].hostname;
             as[i].addEventListener('click', (e) => {
                 e.preventDefault();
-                let href = as[i].href
+                let href = as[i].href;
                 let pathName = new URL(href);
                 if(pathName.hostname === linkhost){
                     window.history.pushState({}, pathName, href);
@@ -205,6 +192,7 @@ class taino{
             });
         }
     }
+
     loadstyling(loader){ /*loads in styling from a component*/
         if(!this.cur.styling){return ;}
         else{
@@ -217,6 +205,7 @@ class taino{
             }
         }
     }
+
     static sanitize(str) {
         let temp = document.createElement('div');
         temp.textContent = str;
@@ -229,13 +218,13 @@ class taino{
         newmeta.content=content;
         document.head.appendChild(newmeta);
     }
+
     removemeta(name){
         var oldmeta = taino.el("meta[name="+name+"]");
         if(oldmeta){
             oldmeta.remove();
         }
     }
-
 };
 
 /*define routes*/
