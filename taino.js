@@ -43,6 +43,20 @@ class taino{
         window.addEventListener('popstate', (event) => {
             this.update();
         });
+        
+        window.addEventListener("DOMNodeInserted", (event) => {
+            this.defaultlisteners();/* detect A tags in newly inserted nodes*/
+        });
+
+        var resizeTimer;
+        window.addEventListener("resize", (event) => {
+            var t =this;
+            if(typeof(resizeTimer)!='undefined'){ clearTimeout(resizeTimer); }
+            resizeTimer = setTimeout(function() {
+                t.loadtemplate();
+                t.update();
+            },250);
+        });
     }
 
 
@@ -99,6 +113,8 @@ class taino{
     }
 
     loadtemplate(){
+        if(taino.el("body > header").length>0){ taino.el("body > header")[0].remove(); }
+        if(taino.el("body > footer").length>0){ taino.el("body > footer")[0].remove(); }
         const callback = () =>{
             var loader = this.templatefile.replace("/","") + 'Loader';
             this.templateobject = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
@@ -196,10 +212,11 @@ class taino{
     loadstyling(loader){ /*loads in styling from a component*/
         if(!this.cur.styling){return ;}
         else{
-            if(!taino.el('style.'+loader)){
+            if(!taino.el('style.tainocss_'+loader)){
                 let body = document.body;
                 let style = document.createElement('style');
                 style.type = 'text/css';
+                style.classList.add('tainocss_'+loader);
                 style.innerHTML=this.cur.styling;
                 body.appendChild(style);
             }
