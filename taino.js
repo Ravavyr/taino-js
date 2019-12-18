@@ -53,7 +53,7 @@ class taino{
             var t =this;
             if(typeof(resizeTimer)!='undefined'){ clearTimeout(resizeTimer); }
             resizeTimer = setTimeout(function() {
-                if(taino.ismobile()){
+                if(taino.ismobile() ===false){
                     t.loadtemplate();
                     t.update();
                 }
@@ -162,7 +162,7 @@ class taino{
         this.currentpage = this.getcurrent(path);
         this.loadScript(this.jspath+this.currentpage+'.js').then(()=>{
             this.loadcontent();
-            window.scrollTo(0,0);            
+            window.scrollTo(0,0);     
         });
     }
 
@@ -247,9 +247,7 @@ class taino{
 
     static ismobile() {
         var useragent = navigator.userAgent;
-        if(useragent.match(/Android/i)||
-            useragent.match(/iPhone/i)||
-            useragent.match(/iPad/i)) {
+        if(useragent.match(/Android|iPhone|iPad/i)){
             return true;
         } else {
             return false;
