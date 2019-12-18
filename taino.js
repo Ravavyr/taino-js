@@ -53,8 +53,10 @@ class taino{
             var t =this;
             if(typeof(resizeTimer)!='undefined'){ clearTimeout(resizeTimer); }
             resizeTimer = setTimeout(function() {
-                t.loadtemplate();
-                t.update();
+                if(taino.ismobile()){
+                    t.loadtemplate();
+                    t.update();
+                }
             },250);
         });
     }
@@ -240,6 +242,17 @@ class taino{
         var oldmeta = taino.el("meta[name="+name+"]");
         if(oldmeta){
             oldmeta.remove();
+        }
+    }
+
+    static ismobile() {
+        var useragent = navigator.userAgent;
+        if(useragent.match(/Android/i)||
+            useragent.match(/iPhone/i)||
+            useragent.match(/iPad/i)) {
+            return true;
+        } else {
+            return false;
         }
     }
 };
