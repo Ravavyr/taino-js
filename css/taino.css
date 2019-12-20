@@ -2,27 +2,18 @@
 html,body{width:100%;min-height:100vh; font-size:16px;margin:0;padding:0;color:#000;background:#1D2838;}
 html{text-rendering:optimizeLegibility !important;}
  
-/*colors
-Green - #00FF40
-DarkGreen - #00A128
-DarkBg - #0D1219
-LightBg -#1D2838 
-*/
 /*FONTS*/
-body{font-family: 'Oswald', sans-serif; letter-spacing:0.1rem;}
+body{font-family: 'Arial', sans-serif; letter-spacing:0.1rem;}
 
 /*GENERAL RULES*/
 h1{margin:0; font-size:4rem; }
 h2{}
 h3{}
 ul{list-style-type:none;margin:0;padding:0}
-ul.l{text-align:left; list-style-type: disc; margin-left: 40px;}
 a{color:#C59952; text-decoration:none; }
 a:hover{ color:rgb(235, 148, 10);}
 .hidden{display:none;opacity:0}
 #tainomain{min-height:500px;}
-.goback{float:left; color:#C59952;padding:0.5rem 1rem; border-radius:4px; box-shadow: 0px 0px 5px rgba(13, 18, 25,0.8);background:rgb(13, 18, 25); cursor:pointer;}
-.goback:hover, .goback:active{color:#fff;}
 
 /*TEMPLATE*/
 header{position:relative; z-index:2; width:100%; background:rgb(13, 18, 25); text-align:center; height:80px; padding-top:50px;}
@@ -30,32 +21,20 @@ header nav{width:96%; max-width:1200px; margin:0 auto; height:40px; }
 header nav a{height:40px; line-height:40px;display:inline-block; vertical-align:top; padding:0 12px; margin:0 0.4rem; font-size:16px; color:#123; background:#ddd; text-align:center; text-transform:uppercase; font-weight:bold; box-shadow:6px 6px #00A128; transition:all 0.1s;}
 header nav a:hover{color:#123; box-shadow:3px 3px #00FF40;}
 footer{width:100%; background:#333; color:#fff; text-align:center; height:100px; padding:20px;}
-footer a{color:#fff;}
-footer a:hover{color:#fff;}
-footer a:hover:before{content:"<"; color:#fff; text-decoration:none;}
-footer a:hover:after{content:">"; color:#fff; text-decoration:none;}
 
 /*PAGES*/
 .pagewrap{position:relative; overflow:hidden; z-index:1; margin:0 auto; min-height:80vh; width:100%; padding:4rem; font-size:20px; text-align:center; color:#fff; }
 .pagewrap:before{content:' '; position:absolute; top:0; right:0; width:40vw; height:40vw; transform:rotate(-40deg); background:url(../images/taino-cemi.svg) no-repeat top right; background-size:contain; opacity:0.4; z-index:-1;}
 .pagewrap:after{content:' '; position:absolute; top:5vh; left:5vw; width:40vw; height:40vw; transform:rotate(-30deg); background:url(../images/taino-sun.svg) no-repeat top right; background-size:contain; opacity:0.4; z-index:-1;}
 .pagewrap .content{padding:2rem; width:90%; max-width:1200px; margin:0 auto 40px auto;background:rgba(13, 18, 25,0.8); box-shadow:0px 0px 5px #00A128; border-radius:4px;}
-.pagewrap .content a.btn{color:#fff; padding:0.5rem 1rem; border-radius:4px; box-shadow: 0px 0px 5px #C59952; background: rgba(13, 18, 25,0.8);}
-.pagewrap .content a.btn:hover:before{content:"<"; color:#fff; text-decoration:none;}
-.pagewrap .content a.btn:hover:after{content:">"; color:#fff; text-decoration:none;}
 .home .content{border:0; background:none; box-shadow:none;}
 .home h1 span{display:block; font-size:2.5rem; font-weight:normal; font-style:italic; color:#00A128; }
-.home .two-blocks{display:flex; justify-content:space-around; flex-wrap:wrap;}
-.home .two-blocks .block{width:48%; max-width:600px; box-shadow:0px 0px 5px #00A128; border-radius:4px; padding:.4rem; background:rgba(13, 18, 25,0.8); }
-.about .pagewrap{ }
-.contact .pagewrap{ }
 
 
 @media screen and (max-width:960px){
     h1{margin:0 0.5rem 1rem 0.5rem; font-size:2.5rem; }
     h2{margin:0 0.5rem 1rem 0.5rem; font-size:1.5rem;}
     .pagewrap{padding:4rem 2rem;}
-    .home .two-blocks .block{width:90%; margin-bottom:1rem;}
 }
 @media screen and (max-width:640px){
     header{padding-top:30px;}

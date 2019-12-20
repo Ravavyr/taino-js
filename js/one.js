@@ -1,16 +1,16 @@
-class homeLoader {
+class oneLoader {
     constructor(site) {
-        this.title = "Taino Simple!";
-        this.meta_desc = "Taino Simple";
+        this.title = "First Taino!";
+        this.meta_desc = "First Taino";
         this.starthtml = `
             <div class="pagewrap">
-                <h1>Welcome to Taino Simple</h1>
+                <h1>First Step for TainoJS</h1>
                 <ul>
                 <li>Follow our tutorials per the Docs page on the main site.</li>
-                <li>Delete the taino.css [or rename it for now] to start fresh.</li>
                 </ul>               
                 </p>
             </div>
         `;
     }
+       
 }

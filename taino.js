@@ -258,12 +258,8 @@ class taino{
 /*define routes*/
 let routes = {
     '/':'home',
-    '/about':'about',
-    '/docs':'docs',
-    '/docs/spa_and_server':'docs/spa_and_server',
-    '/frequently-asked-questions':'faq',
-    '/contact':'contact',
-    '/mit-license':'license'
+    '/one':'one',
+    '/two':'two'
 }
 
 const site = new taino(routes);

@@ -4,17 +4,14 @@ class templateLoader {
             <header>
                 <nav>
                     <a href="/">Home</a>
-                    <a href="/about">About Us</a>
-                    <a href="/docs">Docs</a>
-                    <a href="/frequently-asked-questions">F.A.Q.</a>
-                    <a href="/contact">Contact Us</a>
+                    <a href="/one">Page 1</a>
+                    <a href="/two">Page 2</a>                   
                 </nav>
             </header>
         `;        
         this.footer = `
             <footer>
-                Copyright TainoJS&reg; - 2019<br>
-                <a href="/mit-license">MIT Style License</a>
+                Copyright Do Your Thing<br>
             </footer>            
         `;
     }
