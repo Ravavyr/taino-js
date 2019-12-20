@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>https://taino.netlify.com/</loc>
+<changefreq>weekly</changefreq>
+<lastmod>2019-12-19T00:00:10+00:00</lastmod>
+</url>
+<url>
+<loc>https://taino.netlify.com/about</loc>
+<changefreq>weekly</changefreq>
+<lastmod>2019-12-19T00:00:10+00:00</lastmod>
+</url>
+<url>
+<loc>https://taino.netlify.com/docs</loc>
+<changefreq>weekly</changefreq>
+<lastmod>2019-12-19T00:00:10+00:00</lastmod>
+</url>
+<url>
+<loc>https://taino.netlify.com/frequently-asked-questions</loc>
+<changefreq>weekly</changefreq>
+<lastmod>2019-12-19T00:00:10+00:00</lastmod>
+</url>
+<url>
+<loc>https://taino.netlify.com/contact</loc>
+<changefreq>weekly</changefreq>
+<lastmod>2019-12-19T00:00:10+00:00</lastmod>
+</url>
+</urlset>
