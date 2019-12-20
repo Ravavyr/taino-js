@@ -8,7 +8,7 @@ class docsLoader {
                 <div class="content">
                     <p>
                         The Source Code lives here and is open source:<br>
-                        <a href="https://github.com/Ravavyr/taino-js" target="_blank" rel="nofollow">https://github.com/Ravavyr/taino-js</a><br>
+                        <a href="https://github.com/Ravavyr/taino-js" target="_blank" rel="noopener">https://github.com/Ravavyr/taino-js</a><br>
                         The branches mentioned below can be downloaded there. 
                     </p>
                     <p>
@@ -16,7 +16,7 @@ class docsLoader {
                         <ul>
                             <li>Taino is a Single Page Application - <a href="/docs/spa_and_server">Read about SPA and Servers</a></li>
                             <li>Once you can run a SPA, it's just a matter of dropping the files into place.</li>
-                            <li>Our instructions will help you set it up using <a href="https://nodejs.org/en/" target="_blank" rel="nofollow">Node.JS</a> with NPM to get <a href="https://www.npmjs.com/package/live-server" target="_blank" rel="nofollow">Live Server</a> installed</li>
+                            <li>Our instructions will help you set it up using <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.JS</a> with NPM to get <a href="https://www.npmjs.com/package/live-server" target="_blank" rel="noopener">Live Server</a> installed</li>
                         </ul>
                     </p>
                 </div>
@@ -24,11 +24,11 @@ class docsLoader {
                     <p>
                         <h2>Installing any Branch</h2>
                         <ul class="l">
-                            <li>Clone or download any branch from our <a href="https://github.com/Ravavyr/taino-js" target="_blank" rel="nofollow">repository</a>.<br>
+                            <li>Clone or download any branch from our <a href="https://github.com/Ravavyr/taino-js" target="_blank" rel="noopener">repository</a>.<br>
                             In time we'll create different branches with different purposes.</li>
-                            <li>Install <a href="https://www.npmjs.com/package/live-server" target="_blank" rel="nofollow">Live Server</a> [may require <a href="https://nodejs.org/en/" target="_blank" rel="nofollow">Node.js</a> and NPM depending on your setup]
+                            <li>Install <a href="https://www.npmjs.com/package/live-server" target="_blank" rel="noopener">Live Server</a> [may require <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a> and NPM depending on your setup]
                             <li>Use your terminal/command line to navigate to the folder with the files</li>
-                            <li>Run the command stored at the top of taino.js.<br>It looks something like this: <a href="https://www.npmjs.com/package/live-server" target="_blank" rel="nofollow">~~live-server --port=8080 --entry-file=index.html~~</a></li>
+                            <li>Run the command stored at the top of taino.js.<br>It looks something like this: <a href="https://www.npmjs.com/package/live-server" target="_blank" rel="noopener">~~live-server --port=8080 --entry-file=index.html~~</a></li>
                             <li>It's a live-server command, you can modify your starting/base url any time making your site load any component for your "home page".</li>
                         </ul>
                     </p>
