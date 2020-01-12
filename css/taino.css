@@ -6,6 +6,7 @@ html{text-rendering:optimizeLegibility !important;}
 body{font-family: 'Arial', sans-serif; letter-spacing:0.1rem;}
 
 /*GENERAL RULES*/
+img,iframe{max-width:100%;}
 h1{margin:0; font-size:4rem; }
 h2{}
 h3{}

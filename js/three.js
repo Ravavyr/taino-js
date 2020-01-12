@@ -1,16 +1,16 @@
-class twoLoader {
+class threeLoader {
     constructor(site) {
-        this.title = "Slideshow layouts with Taino";
-        this.meta_desc = "How to setup a slideshow layout with Taino";
+        this.title = "Image galleries with modals in Taino";
+        this.meta_desc = "How to setup a gallery with modal using Taino";
         this.starthtml = `
             <div class="pagewrap">
-                <h1>Slideshow Layouts!</h1>
+                <h1>Galleries with modals!</h1>
                 <ul>
                 <li>This page uses the dogs.ceo api to pull in random dog images.</li>
-                <li>We're using glide.js to generate the slider.</li>
+                <li>Note these modals can be applied to the sliders and static layouts too.</li>
                 </ul>               
-                <div class="doggoslides"></div>
-                <div class="doggoslides2"></div>
+                <div class="doggomodals"></div>
+                <div class="doggomodals2"></div>
 
             </div>
         `;
@@ -20,24 +20,11 @@ class twoLoader {
         /*copied default styling from: https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css
         You can also just include this in the index.html if it's something you'll use across the entire project*/
         this.styling =`
-        .doggoslides,.doggoslides2{ margin:30px 0; }
-        .glide{position:relative;width:100%;box-sizing:border-box}.glide *{box-sizing:inherit}.glide__track{overflow:hidden}.glide__slides{position:relative;width:100%;list-style:none;backface-visibility:hidden;transform-style:preserve-3d;touch-action:pan-Y;overflow:hidden;padding:0;white-space:nowrap;display:flex;flex-wrap:nowrap;will-change:transform}.glide__slides--dragging{user-select:none}.glide__slide{width:100%;height:100%;flex-shrink:0;white-space:normal;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}.glide__slide a{user-select:none;-webkit-user-drag:none;-moz-user-select:none;-ms-user-select:none}.glide__arrows{-webkit-touch-callout:none;user-select:none}.glide__bullets{-webkit-touch-callout:none;user-select:none}.glide--rtl{direction:rtl}
-        /*custom overrides*/
-        .glide{max-width:1200px; margin:0 auto; }
-        .glide_slide{background:rgba(33,33,33,.5); padding:2px; display:flex; justify-content:center; align-items:center;}
-        .glide_slide img{align-self:center; border-radius:10px; width:auto; max-height:300px;}
-        .glide__arrows,.glide__bullets{margin-top:10px;}
-        .glide__arrow{color: #fff; padding:0.5rem 1rem; border:0; border-radius:4px; box-shadow:0px 0px 5px #C59952; background:rgba(13, 18, 25,0.8);}
-        .glide__bullet{padding:0.5rem; margin:2px; border:0; border-radius:50%; box-shadow:0px 0px 5px #C59952; background:rgba(13, 18, 25,0.8);}
-        .glide__bullet:hover{cursor:pointer; background:#00A128;}
-        .glide__bullet--active{box-shadow:0px 0px 5px #00A128; background:#00A128;}
+        .doggomodals,.doggomodals2{ margin:30px 0; }
         `;
     }
        
     async loaddata(){
-        /*insert the glide js script into this page*/
-        site.loadScript('https://cdn.jsdelivr.net/npm/@glidejs/glide');
-
         /*Fetch multiple Example*/
         let datastring = await fetch(site.serverurl+'breeds/image/random/12') /*returns 10 dog images*/
         .then(response => response.json())

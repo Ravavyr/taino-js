@@ -4,6 +4,7 @@
 class taino{
     constructor(routes) {
         /*define taino global vars, mostly endpoints and public creds*/
+        this.serverurl = 'https://dog.ceo/api/';
         this.jspath = '/js';
         this.csspath = '/css';
         this.header = ''; /*sitewide header defined in template.js or wherever*/
@@ -259,7 +260,8 @@ class taino{
 let routes = {
     '/':'home',
     '/one':'one',
-    '/two':'two'
+    '/two':'two',
+    '/three':'three'
 }
 
 const site = new taino(routes);

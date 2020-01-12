@@ -4,8 +4,9 @@ class templateLoader {
             <header>
                 <nav>
                     <a href="/">Home</a>
-                    <a href="/one">Page 1</a>
-                    <a href="/two">Page 2</a>                   
+                    <a href="/one">Basic Layouts</a>
+                    <a href="/two">Slideshows</a>
+                    <a href="/three">Modals/Popups</a>                   
                 </nav>
             </header>
         `;        
