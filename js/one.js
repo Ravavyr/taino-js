@@ -20,6 +20,10 @@ class oneLoader {
             .doggyflex{display:flex; flex-wrap:wrap; justify-content:space-between;}
             .doggyflex .im{width:23%; padding:2px; border-radius:10px; margin-bottom:2vw; background:rgba(33,33,33,.5); display:flex; justify-content:center; align-items:center;}
             .doggyflex .im img{align-self:center; border-radius:10px; width:auto; max-height:200px;}
+
+            @media screen and (max-width:960px){
+                .doggyflex .im{width:48%;}
+            }
         `;
 
         this.loaddata();
