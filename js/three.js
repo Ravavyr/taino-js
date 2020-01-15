@@ -6,7 +6,7 @@ class threeLoader {
             <div class="pagewrap">
                 <h1>Galleries with modals!</h1>
                 <ul>
-                <li>This page uses the dogs.ceo api to pull in random dog images.</li>
+                <li>This page uses the https://dog.ceo api to pull in random dog images.</li>
                 <li>Note these modals can be applied to the sliders and static layouts too.</li>
                 </ul>               
                 <div class="doggomodals"></div>

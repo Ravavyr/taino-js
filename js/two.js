@@ -6,8 +6,8 @@ class twoLoader {
             <div class="pagewrap">
                 <h1>Slideshow Layouts!</h1>
                 <ul>
-                <li>This page uses the dogs.ceo api to pull in random dog images.</li>
-                <li>We're using glide.js to generate the slider.</li>
+                <li>This page uses the https://dog.ceo api to pull in random dog images.</li>
+                <li>We're using https://glidejs.com/ to generate the slider.</li>
                 </ul>               
                 <div class="doggoslides"></div>
                 <div class="doggoslides2"></div>

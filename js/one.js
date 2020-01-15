@@ -6,7 +6,7 @@ class oneLoader {
             <div class="pagewrap">
                 <h1>Basic Image Layouts</h1>
                 <ul>
-                <li>This page uses the dogs.ceo api to pull in random dog images.</li>
+                <li>This page uses the https://dog.ceo api to pull in random dog images.</li>
                 <li>We have a standard image layout and a flexbox layout.</li>
                 </ul>               
                 <div class="doggopic"></div>
