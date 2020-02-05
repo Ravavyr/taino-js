@@ -38,12 +38,12 @@ class docsLoader {
                         <h2>Current Branches</h2>
                         <ul class="l">
                             <li><a href="https://github.com/Ravavyr/taino-js" target="_blank" rel="noopener">Taino_Base:</a> This branch is this website.</li>
+                            <li><a href="https://github.com/Ravavyr/taino-js/tree/taino_simple" target="_blank" rel="noopener">Taino_Simple:</a> [a basic 2 flat pages starter site]</li>
+                            <li><a href="https://github.com/Ravavyr/taino-js/tree/taino_galleries" target="_blank" rel="noopener">Taino_Galleries:</a> [built for portfolio sites]</li>
                         </ul>
                         <h3>Coming Soon:</h3>
                         <ul class="l">
-                            <li><a href="https://github.com/Ravavyr/taino-js/tree/taino_simple" target="_blank" rel="noopener">Taino_Simple:</a> [a basic 2 flat pages starter site]</li>
                             <li>Taino_Ecomm: [built with ecommerce in mind, with cart logic and partial checkout]</li>
-                            <li>Taino_Galleries: [built for portfolio sites]</li>
                             <li>Taino_Business: [built as a standard business website layout]</li>
                             <li>Ideas for additional builds are welcome.</li>
                         </ul>
