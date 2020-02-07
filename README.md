@@ -11,7 +11,7 @@ Taino is a term referring to the indigenous peoples of the carribean. It's origi
 https://en.wikipedia.org/wiki/Arawak
 https://www.researchgate.net/publication/296694496_Origins_of_the_word_Taino
 
-#TUTORIALS:
+# TUTORIALS:
 Initial Setup:
 - Click the green "clone or download" button top right. Make sure to select the "taino_base" branch and download it.
 - To run on your local machine, you will need to be running a server. 
@@ -24,14 +24,14 @@ this command: live-server --port=8080 --entry-file=index.html
 - Read more at https://taino.netlify.com
 
 
-#CURRENT FEATURES:
+# CURRENT FEATURES:
 - It lets you build websites, fast, any website, almost. What else do ya need? ;)
 
-#TO-DO:
+# TO-DO:
 - State handling 
 - Expand pupper [site crawler and flat file builder for Taino] and setup its repo.
 
-#STRUCTURE:
+# STRUCTURE:
 - taino.js [loads core functionality, contains all route definitions]
 - /css/taino.css [should be your main CSS file for the project, components can make use of their own CSS but we recommend it being in the main file so it's cached on first load]
 - template.js [defines header and footer and any other shared template objects you want to have, eg. popup forms, slide in cart, etc Also shared functions/methods eg. for setting active states on page load]
