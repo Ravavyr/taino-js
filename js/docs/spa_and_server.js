@@ -16,5 +16,10 @@ class docs_spa_and_serverLoader {
                 </div>
             </div>
         `;
-    }       
+        this.loaddata();
+    }
+
+    async loaddata(){
+        templateLoader.updatemainnav('docs');
+    }      
 }

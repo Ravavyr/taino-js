@@ -12,5 +12,10 @@ class contactLoader {
                 </div>
             </div>
         `;
+        this.loaddata();
+    }
+
+    async loaddata(){
+        templateLoader.updatemainnav('contact');
     }
 }

@@ -40,6 +40,11 @@ class aboutLoader {
                 </div>
             </div>
         `;
+        this.loaddata();
+    }
+
+    async loaddata(){
+        templateLoader.updatemainnav('about');
     }
        
 }

@@ -32,5 +32,10 @@ class homeLoader {
             
             </div>
         `;
+        this.loaddata();
+    }
+
+    async loaddata(){
+        templateLoader.updatemainnav('home');
     }
 }

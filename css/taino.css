@@ -27,8 +27,8 @@ a:hover{ color:rgb(235, 148, 10);}
 /*TEMPLATE*/
 header{position:relative; z-index:2; width:100%; background:rgb(13, 18, 25); text-align:center; height:80px; padding-top:50px;}
 header nav{width:96%; max-width:1200px; margin:0 auto; height:40px; }
-header nav a{height:40px; line-height:40px;display:inline-block; vertical-align:top; padding:0 12px; margin:0 0.4rem; font-size:16px; color:#123; background:#ddd; text-align:center; text-transform:uppercase; font-weight:bold; box-shadow:6px 6px #00A128; transition:all 0.1s;}
-header nav a:hover{color:#123; box-shadow:3px 3px #00FF40;}
+header nav a{height:40px; line-height:40px;display:inline-block; vertical-align:top; padding:0 12px; margin:0 0.4rem; font-size:16px; color:#123; background:#ddd; text-align:center; text-transform:uppercase; font-weight:bold; box-shadow:3px 3px #00A128; transition:all 0.1s;}
+header nav a:hover,header nav a.active{color:#123; box-shadow:6px 6px #00FF40;}
 footer{width:100%; background:#333; color:#fff; text-align:center; height:100px; padding:20px;}
 footer a{color:#fff;}
 footer a:hover{color:#fff;}
