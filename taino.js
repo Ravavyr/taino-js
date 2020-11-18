@@ -15,7 +15,7 @@ class taino{
 
         /*define current location object*/
         this.cur = {};
-        
+
         this.routes = Object.keys(routes)
             .sort(function(a,b){ return b.length - a.length; })
             .map(function(path) {
@@ -39,11 +39,11 @@ class taino{
             this.main.appendChild(maindiv);
             this.main.content = document.getElementById('tainomain');
         }
-        //beforebegin, afterbegin, afterend        
+        //beforebegin, afterbegin, afterend
         window.addEventListener('popstate', (event) => {
             this.update();
         });
-        
+
         window.addEventListener("DOMNodeInserted", (event) => {
             this.defaultlisteners();/* detect A tags in newly inserted nodes*/
         });
@@ -140,7 +140,7 @@ class taino{
             this.defaultlisteners();
             this.loadstyling(loader);
             if(taino.elid(hashforanchor)){
-                window.scrollBy(0, taino.elid(hashforanchor).offsetTop);  
+                window.scrollBy(0, taino.elid(hashforanchor).offsetTop);
             }
         }else{
             this.loadScript(this.jspath+this.currentpage+'.js').then(() => {
@@ -151,7 +151,7 @@ class taino{
                 this.defaultlisteners();
                 this.loadstyling(loader);
                 if(taino.elid(hashforanchor)){
-                    window.scrollBy(0, taino.elid(hashforanchor).offsetTop);  
+                    window.scrollBy(0, taino.elid(hashforanchor).offsetTop);
                 }
             });
         }
@@ -162,7 +162,7 @@ class taino{
         this.currentpage = this.getcurrent(path);
         this.loadScript(this.jspath+this.currentpage+'.js').then(()=>{
             this.loadcontent();
-            window.scrollTo(0,0);     
+            window.scrollTo(0,0);
         });
     }
 
