@@ -197,6 +197,14 @@ class taino{
             if(as[i].getAttribute("target")=="_blank"){continue;}
             let linkhost = as[i].hostname;
             as[i].addEventListener('click', (e) => {
+                if (
+                    e.ctrlKey ||
+                    e.shiftKey ||
+                    e.metaKey || // apple
+                    (e.button && e.button == 1) // middle click, >IE9 + everyone else
+                ){
+                    return;
+                }
                 e.preventDefault();
                 let href = as[i].href;
                 let pathName = new URL(href);
