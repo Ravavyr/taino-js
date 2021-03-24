@@ -10,16 +10,16 @@ class templateLoader {
                     <a data-active="contact" href="/contact">Contact Us</a>
                 </nav>
             </header>
-        `;        
+        `;
         this.footer = `
             <footer>
-                Copyright TainoJS&reg; - 2019 - 2020<br>
+                Copyright TainoJS&reg; - 2019 - ${new Date().getFullYear()}<br>
                 <a href="/mit-license">MIT Style License</a>
-            </footer>            
+            </footer>
         `;
     }
 
-    static updatemainnav(linkname){        
+    static updatemainnav(linkname){
         let curlink = taino.el('header nav a[data-active="'+linkname+'"]')[0];
         if(curlink){
             if(taino.el('header nav a.active').length>0){ taino.el('header nav a.active')[0].classList.remove("active"); }
