@@ -44,9 +44,13 @@ class taino{
             this.update();
         });
 
-        window.addEventListener("DOMNodeInserted", (event) => {
-            this.defaultlisteners();/* detect A tags in newly inserted nodes*/
-        });
+				const mutationObserver = new MutationObserver(() => {
+					this.defaultlisteners();
+				});
+
+				mutationObserver.observe(document, {
+					childList: true,
+				});
 
         var resizeTimer;
         window.addEventListener("resize", (event) => {
