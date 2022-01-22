@@ -1,4 +1,4 @@
-class faqLoader {
+class frequentlyaskedquestionsLoader {
     constructor(site) {
         this.title = "Questions about TainoJS";
         this.meta_desc = "Questions and answers about the TainoJS";
