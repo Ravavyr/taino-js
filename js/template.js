@@ -1,4 +1,5 @@
 class templateLoader {
+    // TODO: read files from js/pages folder to dynamically generate top nav.
     constructor(site) {
         this.header = `
             <header>
@@ -21,8 +22,14 @@ class templateLoader {
 
     static updatemainnav(linkname){
         let curlink = taino.el('header nav a[data-active="'+linkname+'"]')[0];
-        if(curlink){
-            if(taino.el('header nav a.active').length>0){ taino.el('header nav a.active')[0].classList.remove("active"); }
+
+        if (curlink) {
+            const headerLink = taino.el('header nav a.active');
+
+            if (headerLink.length) { 
+                headerLink[0].classList.remove("active");
+            }
+
             curlink.classList.add("active");
         }
     }

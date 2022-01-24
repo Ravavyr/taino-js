@@ -2,9 +2,10 @@
 /*Run this baby: live-server --port=8080 --entry-file=index.html*/
 
 class taino{
-    constructor(routes) {
+    constructor() {
         /*define taino global vars, mostly endpoints and public creds*/
         this.jspath = '/js';
+        this.pagepath = `${this.jspath}/pages`;
         this.csspath = '/css';
         this.header = ''; /*sitewide header defined in template.js or wherever*/
         this.footer = ''; /*sitewide footer defined in template.js or wherever*/
@@ -15,16 +16,6 @@ class taino{
 
         /*define current location object*/
         this.cur = {};
-
-        this.routes = Object.keys(routes)
-            .sort(function(a,b){ return b.length - a.length; })
-            .map(function(path) {
-            return {
-                path: new RegExp("^" + path.replace(/:[^\s/]+/g, '([\\w%+-]+)') + "$"),
-                module: routes[path]
-            };
-        });
-        this.routevars=[];
 
         this.components = new Map();
 
@@ -73,6 +64,8 @@ class taino{
         throw new Error(`${loader} constructor does not exist!`);
     }
 
+    // TODO: If script doesn't exist, it throws Unexpected token error in console.
+
     /*additional scripts are loaded via callbacks*/
     loadScript(url){
         /*
@@ -104,25 +97,22 @@ class taino{
         }
     }
 
-    getcurrent(path){
-        let curr = '/fourohfour'; /*Need to make this have a 404 header*/
-        for (var i = 0, l = this.routes.length; i < l; i++) {
-            var found = path.replace(".html","").match(this.routes[i].path);
-            if(found){
-                this.removemeta("robots");
-                curr ="/"+this.routes[i].module; // module to load
-                this.routevars =  found.slice(1); // arguments for module
-                break;
-            }
+    getcurrent(path) {
+        let pagename = path;
+
+        if (pagename === `/`) {
+            pagename = `/home`;
         }
-        return curr;
+
+        this.removemeta("robots");
+        return pagename.replace('.html','');
     }
 
-    loadtemplate(){
+    loadtemplate() {
         if(taino.el("body > header").length>0){ taino.el("body > header")[0].remove(); }
         if(taino.el("body > footer").length>0){ taino.el("body > footer")[0].remove(); }
-        const callback = () =>{
-            var loader = this.templatefile.replace("/","") + 'Loader';
+        const callback = () => {
+            var loader = this.templatefile.replace("/","").replace(/-/g, '') + 'Loader';
             this.templateobject = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
             this.main.header = this.templateobject.header;
             this.main.footer = this.templateobject.footer;
@@ -132,42 +122,45 @@ class taino{
         return this.loadScript(this.jspath+this.templatefile+'.js').then(callback);
     }
 
+    update() {
+        var path =window.location.pathname;
+        this.currentpage = this.getcurrent(path);
+        this.loadScript(this.pagepath+this.currentpage+'.js').then(()=>{
+            this.loadcontent();
+            window.scrollTo(0,0);
+        });
+    }
+
     loadcontent(){
         this.main.setAttribute("class",this.currentpage.replace(/\//gi,''));
-        var loader = this.currentpage.substr(1).replace(/\//gi,'_') + 'Loader';
-        var hashforanchor = window.location.hash.substr(1);
+        var loader = this.currentpage.slice(1).replace(/\//gi,'_').replace(/-/g, '') + 'Loader';
+
         if(this.cur.constructor.name && this.cur.constructor.name===loader){
-            this.cur = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
-            this.main.content.innerHTML = this.cur.starthtml;
-            document.title = this.cur.title;
-            taino.el('meta[name=description]').setAttribute("content",this.cur.meta_desc);
-            this.defaultlisteners();
-            this.loadstyling(loader);
-            if(taino.elid(hashforanchor)){
-                window.scrollBy(0, taino.elid(hashforanchor).offsetTop);
-            }
+            this.setContent(loader);
         }else{
-            this.loadScript(this.jspath+this.currentpage+'.js').then(() => {
-                this.cur = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
-                this.main.content.innerHTML = this.cur.starthtml;
-                document.title = this.cur.title;
-                taino.el('meta[name=description]').setAttribute("content",this.cur.meta_desc);
-                this.defaultlisteners();
-                this.loadstyling(loader);
-                if(taino.elid(hashforanchor)){
-                    window.scrollBy(0, taino.elid(hashforanchor).offsetTop);
-                }
+            this.loadScript(this.pagepath+this.currentpage+'.js').then(() => {
+                this.setContent(loader);
+            })
+            .catch(() => {
+                this.loadScript(this.jspath+`/fourohfour`+'.js').then(() => {
+                    var loader = `fourohfourLoader`;
+                    this.setContent(loader);
+                })
             });
         }
     }
 
-    update(){
-        var path =window.location.pathname;
-        this.currentpage = this.getcurrent(path);
-        this.loadScript(this.jspath+this.currentpage+'.js').then(()=>{
-            this.loadcontent();
-            window.scrollTo(0,0);
-        });
+    setContent(loader) {
+        this.cur = this.createLoader(loader) /*filename+'Loader' has to be the main class.*/
+        this.main.content.innerHTML = this.cur.starthtml;
+        document.title = this.cur.title;
+        taino.el('meta[name=description]').setAttribute("content",this.cur.meta_desc);
+        this.defaultlisteners();
+        this.loadstyling(loader);
+        var hashforanchor = window.location.hash.slice(1);
+        if(taino.elid(hashforanchor)){
+            window.scrollBy(0, taino.elid(hashforanchor).offsetTop);
+        }
     }
 
     route(path){
@@ -267,17 +260,6 @@ class taino{
     }
 };
 
-/*define routes*/
-let routes = {
-    '/':'home',
-    '/about':'about',
-    '/docs':'docs',
-    '/docs/spa_and_server':'docs/spa_and_server',
-    '/frequently-asked-questions':'faq',
-    '/contact':'contact',
-    '/mit-license':'license'
-}
-
-const site = new taino(routes);
+const site = new taino();
 site.loadtemplate();
 site.loadcontent();

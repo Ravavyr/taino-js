@@ -1,4 +1,4 @@
-class licenseLoader {
+class mitlicenseLoader {
     constructor(site) {
         this.title = "Taino Has a License";
         this.meta_desc = "Taino has a license!";
